@@ -20,9 +20,13 @@ typedef struct {
 	//List of entities
 	Entity *e_list[MAX_ENTITIES];
 
+	//Queue of entities that will be added next update
+	Entity *e_queue[MAX_ENTITIES];
+
 	//Game info
 	int ups;	//Updates/sec
 	int n_entities;	//Current number of entities in the game
+	int n_queue;
 	int n_updates;	//Number of updates
 } Engine;
 
@@ -54,11 +58,27 @@ bool engine_is_free(
 	int y
 );
 
+//Removes the dead units and updates all the entities
+void engine_update(
+	Engine *engine
+);
+
 //Method that updates an entity or a free space(contains the game logic)
 void engine_update_entity(
 	Engine *engine, 
 	int x, 
 	int y
+);
+
+//Add the engine to the queue, the entity will get added in the engine next update
+bool engine_add_queue(
+	Engine *engine, 
+	Entity *entity
+);
+
+//Add all the entities in queue to the engine
+void engine_process_queue(
+	Engine *engine
 );
 
 //Add an entity in the engine

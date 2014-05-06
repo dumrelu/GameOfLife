@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "engine.h"
+#include <unistd.h>
 
 int main(int argc, char *argv[])
 {	
@@ -7,32 +8,32 @@ int main(int argc, char *argv[])
 	Engine engine;
 	engine_init(&engine, 10, 10, 30);
 	
-	//Prepare some entities
-	Entity *entity1 = entity_create(0, 0);
-	Entity *entity2 = entity_create(1, 0);
-	Entity *entity3 = entity_create(0, 4);
-
-	//Add them to the engine
-	engine_add_entity(&engine, entity1);
-	engine_add_entity(&engine, entity2);
-	engine_add_entity(&engine, entity3);
-
-	//Testing game logic
-	engine_update_entity(&engine, 1, 0);
+	engine_add_entity(&engine, entity_create(5, 3));
+	engine_add_entity(&engine, entity_create(4, 4));
+	engine_add_entity(&engine, entity_create(5, 4));
+	engine_add_entity(&engine, entity_create(6, 4));
+	engine_add_entity(&engine, entity_create(4, 5));
+	engine_add_entity(&engine, entity_create(6, 5));
+	engine_add_entity(&engine, entity_create(5, 6));
 
 	//Print entities
-	int i, j;
-	for(i = 0; i < engine.height; i++)
+	int i, j, g;
+	for(g = 0; g < 30; g++)
 	{
-		for(j = 0; j < engine.width; j++)
-			if(!engine_is_free(&engine, j, i))
-				printf("1");
-			else 
-				printf(" ");
-		printf("\n");
+		engine_update(&engine);
+		for(i = 0; i < engine.height; i++)
+		{
+			for(j = 0; j < engine.width; j++)
+				if(!engine_is_free(&engine, j, i))
+					printf("1");
+				else 
+					printf(" ");
+			printf("\n");
+		}
+		sleep(1);
 	}
 
-	entity_printf(entity2);
+	//entity_printf(entity2);
 
 	//Free mem
 	engine_free(&engine);
