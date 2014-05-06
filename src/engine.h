@@ -67,7 +67,12 @@ bool engine_remove_entity(
 	int y
 );
 
-//TODO: engine_get_entity
+//Check if coordinates are corect and fetch entity. Return NULL if wrong coordinates or no entity at the given coordinates
+Entity *engine_get_entity(
+	Engine *engine, 
+	int x, 
+	int y
+);
 
 //Free all the memory used	TODO:
 void engine_free(

@@ -86,3 +86,26 @@ bool engine_remove_entity(Engine *engine, int x, int y)
 
 	return true;
 }
+
+Entity *engine_get_entity(Engine *engine, int x, int y)
+{
+	if(!engine_is_correct(engine, x, y))
+		return NULL;
+	return engine->entities[y][x];
+}
+
+void engine_free(Engine *engine)
+{
+	int i, j;
+	
+	//Free memory
+	for(i = 0; i < engine->n_entities; i++)
+		free(engine->e_list[i]);
+
+	//No dangling pointers pls
+	for(i = 0; i < engine->n_entities; i++)
+		engine->e_list[i];
+	for(i = 0; i < engine->height; i++)
+		for(j = 0; j < engine->width; j++)
+			engine->entities[i][j] = NULL;
+}
