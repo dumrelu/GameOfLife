@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
 	engine_print_state(&engine);
 
 	entity_printf(entity);
+	entity_printf(engine_get_entity(&engine, 1, 1));
+	entity_printf(engine_get_entity(&engine, 2, 1));
 
 	engine_remove_entity(&engine, 1, 1);
 
