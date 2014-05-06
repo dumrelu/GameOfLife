@@ -15,7 +15,9 @@ int main(int argc, char *argv[])
 
 	entity_printf(entity);
 
-	free(entity);
+	engine_remove_entity(&engine, 1, 1);
+
+	engine_print_state(&engine);
 
 	return 0;
 }

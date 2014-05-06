@@ -62,3 +62,27 @@ bool engine_add_entity(Engine *engine, Entity *entity)
 	//Entity added to the engine
 	return true;
 }
+
+bool engine_remove_entity(Engine *engine, int x, int y)
+{
+	//Check if there is an entity to remve
+	if(engine_is_free(engine, x, y))
+		return false;
+
+	//Fetch the entity
+	Entity *entity = engine->entities[y][x];
+
+	//Remove from matrix
+	engine->entities[y][x] = NULL;
+
+	//Remove from list
+	//Set the last element of the list in the soon to be removed entity pos
+	engine->e_list[entity->e_id] = engine->e_list[engine->n_entities-1];
+	engine->e_list[engine->n_entities-1] = NULL;
+	engine->n_entities--;	//Update number of entities
+
+	//Free entity memory
+	free(entity);
+
+	return true;
+}

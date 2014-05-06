@@ -60,11 +60,14 @@ bool engine_add_entity(
 	Entity *entity
 );
 
-//Removes an entity from the engine + frees entity memory TODO: 
+//Removes an entity from the engine + frees entity memory TODO: more tests
 bool engine_remove_entity(
 	Engine *engine, 
-	Entity *entity
+	int x,
+	int y
 );
+
+//TODO: engine_get_entity
 
 //Free all the memory used	TODO:
 void engine_free(
