@@ -54,6 +54,13 @@ bool engine_is_free(
 	int y
 );
 
+//Method that updates an entity or a free space(contains the game logic)
+void engine_update_entity(
+	Engine *engine, 
+	int x, 
+	int y
+);
+
 //Add an entity in the engine
 bool engine_add_entity(
 	Engine *engine, 

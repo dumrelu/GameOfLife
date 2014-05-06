@@ -44,6 +44,39 @@ bool engine_is_free(Engine *engine, int x, int y)
 	return (engine->entities[y][x] == NULL);
 }
 
+void engine_update_entity(Engine *engine, int x, int y)
+{
+	//Iterators
+	int i, j;
+
+	//Holds the number of neighbours
+	int n_neighbours = 0;
+
+	//Count the neighbours
+	for(i = -1; i <= 1; i++)
+		for(j = -1; j <= 1; j++)
+			if(!engine_is_free(engine, x+j, y+i))
+				n_neighbours++;
+
+	//Fetch the entity at the given coordinates
+	Entity *entity = engine_get_entity(engine, x, y);
+
+	//The logic
+	if(entity == NULL)	//For a space that is 'empty' or 'unpopulated'
+	{
+		if(n_neighbours == 3) //Each cell with three neighbors becomes populated.
+			engine_add_entity(engine, entity_create(x, y));	//Add a new entity at the current position
+	} else //For a space that is 'populated':
+	{
+		if(n_neighbours < 2) //Each cell with one or no neighbors dies, as if by loneliness.
+			entity->alive = false;	//signal the engine that the entity should be removed
+		else if(n_neighbours >= 4) //Each cell with four or more neighbors dies, as if by overpopulation.
+			entity->alive = false;	//signal the engine that the entity should be removed
+		else	//Each cell with two or three neighbors survives. 
+			entity->generation++;
+	}
+}
+
 bool engine_add_entity(Engine *engine, Entity *entity)
 {
 	//If no more free space left, don't add
