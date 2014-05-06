@@ -15,5 +15,8 @@ Entity *entity_create(int x, int y)
 
 void entity_printf(Entity *entity)
 {
-	printf("Entity(x=%d, y=%d, state=%s, e_id=%d, gen=%d)\n", entity->x, entity->y, (entity->alive) ? "alive" : "dead", entity->e_id, entity->generation);
+	if(entity == NULL)
+		printf("Entity(NULL)\n");
+	else
+		printf("Entity(x=%d, y=%d, state=%s, e_id=%d, gen=%d)\n", entity->x, entity->y, (entity->alive) ? "alive" : "dead", entity->e_id, entity->generation);
 }
