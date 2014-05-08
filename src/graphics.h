@@ -26,8 +26,14 @@ void graphics_close(Graphics *graphics);
 //Set drawing color
 void graphics_color(Graphics *graphics, unsigned char red, unsigned char green, unsigned char blue);
 
-//Set background color TODO
+//Set background color
 void graphics_background(Graphics *graphics, unsigned char red, unsigned char green, unsigned char blue);
+
+//Clear screen
+void graphics_clear_screen(Graphics *graphics);
+
+//Flush output to screen
+void graphics_flush(Graphics *graphics);
 
 //Had an event occured? TODO
 int graphics_check_event(Graphics *graphics);
@@ -46,5 +52,7 @@ void graphics_draw_rect(Graphics *graphics, int x, int y, int height, int width)
 
 //Draw fill rect TODO
 void graphics_draw_fill_rect(Graphics *graphics, int x, int y, int height, int width);
+
+//TODO: images
 
 #endif /*GOF_GRAPHICS_H*/

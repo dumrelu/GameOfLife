@@ -58,4 +58,26 @@ void graphics_color(Graphics *graphics, unsigned char red, unsigned char green, 
 	XSetForeground(graphics->display, graphics->gc, color.pixel);
 }
 
+void graphics_background(Graphics *graphics, unsigned char red, unsigned char green, unsigned char blue)
+{
+	XColor color;
+	color.pixel = 0;
+	color.red = red<<8;
+	color.green = green<<8;
+	color.blue = blue<<8;
+	XAllocColor(graphics->display, graphics->colormap, &color);
 
+	XSetWindowAttributes attr;
+	attr.background_pixel = color.pixel;
+	XChangeWindowAttributes(graphics->display, graphics->window, CWBackPixel,&attr);
+}
+
+void graphics_clear_screen(Graphics *graphics)
+{
+	XClearWindow(graphics->display,graphics->window);
+}
+
+void graphics_flush(Graphics *graphics)
+{
+	XFlush(graphics->display);
+}
