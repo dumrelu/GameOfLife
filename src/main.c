@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {	
 	//Prepare engine
 	Engine engine;
-	engine_init(&engine, 10, 10, 30);
+	engine_init(&engine, 15, 15, 30);
 	
 	engine_add_entity(&engine, entity_create(5, 3));
 	engine_add_entity(&engine, entity_create(4, 4));

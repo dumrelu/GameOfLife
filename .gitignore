@@ -3,3 +3,5 @@
 bin/
 *~
 gof
+g
+gtest.c
