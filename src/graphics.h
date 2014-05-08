@@ -35,10 +35,10 @@ void graphics_clear_screen(Graphics *graphics);
 //Flush output to screen
 void graphics_flush(Graphics *graphics);
 
-//Had an event occured? TODO
+//Had an event occured?
 int graphics_check_event(Graphics *graphics);
 
-//Get the event TODO
+//Get the event and update last event coordinates
 char graphics_event(Graphics *graphics);
 
 //Draw point TODO

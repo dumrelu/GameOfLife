@@ -81,3 +81,38 @@ void graphics_flush(Graphics *graphics)
 {
 	XFlush(graphics->display);
 }
+
+int graphics_check_event(Graphics *graphics)
+{
+	XEvent e;
+
+	if(XCheckMaskEvent(graphics->display,-1,&e)) {
+		if(e.type==KeyPress) {
+			XPutBackEvent(graphics->display,&e);
+				return 1;
+		} else if (e.type==ButtonPress) {
+			XPutBackEvent(graphics->display,&e);
+   				return 1;
+		} else
+			return 0;
+       }
+}
+
+char graphics_event(Graphics *graphics)
+{
+	XEvent e;
+
+	XNextEvent(graphics->display,&e);
+
+	if(e.type==KeyPress) {
+		graphics->last_x = e.xkey.x;
+		graphics->last_y = e.xkey.y;
+		return XLookupKeysym(&e.xkey,0);
+	} else if(e.type==ButtonPress) {
+		graphics->last_x = e.xkey.x;
+		graphics->last_y = e.xkey.y;
+		return e.xbutton.button;
+	}
+
+	return -1;
+}
