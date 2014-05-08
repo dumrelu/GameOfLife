@@ -27,7 +27,6 @@ typedef struct {
 	int ups;	//Updates/sec
 	int n_entities;	//Current number of entities in the game
 	int n_queue;
-	int n_updates;	//Number of updates
 } Engine;
 
 

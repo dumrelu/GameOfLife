@@ -21,8 +21,7 @@ void engine_init(Engine *engine, int height, int width, int ups)
 	//Set game info
 	engine->ups = ups;
 	engine->n_entities = 0;
-	engine->n_queue = 0;
-	engine->n_updates = 0;
+	engine->n_queue = 0;;
 }
 
 void engine_print_state(Engine *engine)
@@ -30,7 +29,7 @@ void engine_print_state(Engine *engine)
 	printf("Engine info: \n");
 	printf("\t->matrix size = %dx%d [hxw].\n",  engine->height, engine->width);
 	printf("\t->Number of entities currently in the engine: %d.\n", engine->n_entities);
-	printf("\t->Current ups: %d. Total updates: %d.\n", engine->ups, engine->n_updates);
+	printf("\t->Current ups: %d.\n", engine->ups);
 }
 
 bool engine_is_correct(Engine *engine, int x, int y)
