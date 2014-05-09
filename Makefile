@@ -1,5 +1,5 @@
 compile: bin bin/main.o bin/entity.o bin/engine.o
-	gcc  bin/entity.o bin/main.o bin/engine.o -ogof
+	gcc  bin/entity.o bin/main.o bin/engine.o -ogof -lm
 
 bin: 
 	mkdir bin/

@@ -1,4 +1,5 @@
 #include "engine.h"
+#include <math.h>
 
 Engine *engine_create(int height,int width,int ups)
 {
@@ -54,6 +55,7 @@ void engine_print_state(Engine *engine)
 	printf("Engine info: \n");
 	printf("\t->matrix size = %dx%d [hxw].\n",  engine->height, engine->width);
 	printf("\t->Number of entities currently in the engine: %d.\n", engine->n_entities);
+	printf("\t->Number of entities currently in the queue: %d.\n", engine->n_queue);
 	printf("\t->Current ups: %d.\n", engine->ups);
 }
 
@@ -233,4 +235,124 @@ void engine_end(Engine *engine)
 	for(i = 0; i < engine->height; i++)
 		for(j = 0; j < engine->width; j++)
 			engine->entities[i][j] = NULL;
+}
+
+bool engine_save(Engine *engine, const char *savefile_name)
+{	//TODO: refactor
+	//Iterators
+	int i, j;
+
+	//Open file
+	FILE *savefile = fopen(savefile_name, "wb");
+	if(!savefile)
+		return false;
+
+	//Write dimentions
+	fwrite(&engine->height, sizeof(int), 1, savefile);
+	fwrite(&engine->width, sizeof(int), 1, savefile);	
+
+	//Write game info
+	fwrite(&engine->ups, sizeof(int), 1, savefile);
+	fwrite(&engine->n_queue, sizeof(int), 1, savefile);
+
+	//Write the queue(just the coordinates)
+	for(i = 0; i < engine->n_queue; i++)
+	{
+		fwrite(&engine->e_queue[i]->x, sizeof(int), 1, savefile);
+		fwrite(&engine->e_queue[i]->y, sizeof(int), 1, savefile);
+	}
+
+	//Write the current entities
+	int exists = 1, nexists = 0;
+	Entity *entity;
+	for(i = 0; i < engine->height; i++)
+		for(j = 0; j < engine->width; j++)
+		{
+			entity = engine_get_entity(engine, j, i);
+			if(entity)
+			{
+				fwrite(&exists, 1, 1, savefile);
+				if(entity->alive)
+					fwrite(&exists, 1, 1, savefile);
+				else
+					fwrite(&nexists, 1, 1, savefile);
+			}
+			else
+			{
+				fwrite(&nexists, 1, 1, savefile);
+				fwrite(&nexists, 1, 1, savefile);
+			}
+		}
+	
+
+	//Done
+	fclose(savefile);
+	return true;
+}
+
+Engine *engine_load(const char *savefile_name)
+{	//TODO: refactor
+	//Iterators
+	int i, j;
+
+	//Open file
+	FILE *savefile = fopen(savefile_name, "rb");
+	if(!savefile)
+		return NULL;
+
+	//Variables engine info will be temporarely stored
+	int height, width;
+	int ups, n_queue;
+
+	//Read dimentions
+	fread(&height, sizeof(int), 1, savefile);
+	fread(&width, sizeof(int), 1, savefile);
+
+	//Read game info
+	fread(&ups, sizeof(int), 1, savefile);
+	fread(&n_queue, sizeof(int), 1, savefile);
+
+	//Create engine
+	Engine *engine = engine_create(height, width, ups);
+	if(!engine)
+		return NULL;
+
+	//Create the queue
+	int x, y;
+	for(i = 0; i < n_queue; i++)
+	{	
+		//Read coordinates from file
+		fread(&x, sizeof(int), 1, savefile);
+		fread(&y, sizeof(int), 1, savefile);
+
+		//Add to queue
+		engine_add_queue(engine, entity_create(x, y));
+	}
+
+	//Load entities
+	int exists = 0;
+	Entity *entity;
+	for(i = 0; i < height; i++)
+	{
+		for(j = 0; j < width; j++)
+		{
+			fread(&exists, 1, 1, savefile);
+			if(!exists)
+			{
+				fread(&exists, 1, 1, savefile);
+				continue;
+			}
+
+			entity = entity_create(j, i);
+			engine_add_entity(engine, entity);
+			
+			fread(&exists, 1, 1, savefile);
+			
+			entity->alive = exists;
+		}
+	}
+
+	//Done
+	fclose(savefile);	
+	return engine;
 }

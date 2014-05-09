@@ -117,4 +117,15 @@ void engine_end(
 	Engine *engine
 );
 
+//Saves the currect state of the engine to the given file TODO
+bool engine_save(
+	Engine *engine, 
+	const char *savefile_name
+);
+
+//Restores the state from the given save file to a new engine TODO
+Engine *engine_load(
+	const char *savefile_name
+);
+
 #endif /*ENGINE_H*/

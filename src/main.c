@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {	
 	//Prepare engine
-	Engine *engine = engine_create(15, 15, 30);
+	Engine *engine = engine_create(15, 16, 30);
 	
 	engine_add_entity(engine, entity_create(5, 3));
 	engine_add_entity(engine, entity_create(4, 4));
@@ -17,9 +17,8 @@ int main(int argc, char *argv[])
 
 	//Print entities
 	int i, j, g;
-	for(g = 0; g < 5; g++)
+	for(g = 0; g < 10; g++)
 	{
-		engine_update(engine);
 		for(i = 0; i < engine->height; i++)
 		{
 			for(j = 0; j < engine->width; j++)
@@ -29,6 +28,18 @@ int main(int argc, char *argv[])
 					printf(" ");
 			printf("\n");
 		}
+		engine_update(engine);
+		printf("Saving: ");
+		engine_print_state(engine);
+		engine_save(engine, "testfile.sav");
+		for(i = 0; i < engine->n_queue; i++)
+			entity_printf(engine->e_queue[i]);
+		engine_free(engine);
+		printf("Loading: ");
+		engine = engine_load("testfile.sav");
+		engine_print_state(engine);
+		for(i = 0; i < engine->n_queue; i++)
+			entity_printf(engine->e_queue[i]);
 		sleep(1);
 	}
 
