@@ -30,8 +30,15 @@ typedef struct {
 } Engine;
 
 
+//Allocates memory for an engine and calls init, return null if fail
+Engine *engine_create(
+	int height,
+	int width,
+	int ups
+);
+
 //Initialize the engine with the given parameters
-void engine_init(
+bool engine_init(
 	Engine *engine, 
 	int height, 
 	int width, 
@@ -100,8 +107,13 @@ Entity *engine_get_entity(
 	int y
 );
 
-//Free all the memory used
+//Free all the memory used by the engine
 void engine_free(
+	Engine *engine
+);
+
+//Free all the memory used by the entities
+void engine_end(
 	Engine *engine
 );
 

@@ -1,7 +1,30 @@
 #include "engine.h"
 
-void engine_init(Engine *engine, int height, int width, int ups)
+Engine *engine_create(int height,int width,int ups)
 {
+	//Allocate memory
+	Engine *engine = (Engine*) malloc(sizeof(Engine));
+
+	//Check if allocated
+	if(engine == NULL)
+		return NULL;
+
+	//Init
+	if(engine_init(engine, height, width, ups))
+		return engine;
+	else //If initialization failed
+	{
+		free(engine);
+		return NULL;
+	}
+}
+
+bool engine_init(Engine *engine, int height, int width, int ups)
+{
+	//If given dimensions greater the max dimensions, fail
+	if(height > MAX_HEIGHT || width > MAX_WIDTH)
+		return false;
+
 	//Set matrix size
 	engine->height = height;
 	engine->width = width;
@@ -21,7 +44,9 @@ void engine_init(Engine *engine, int height, int width, int ups)
 	//Set game info
 	engine->ups = ups;
 	engine->n_entities = 0;
-	engine->n_queue = 0;;
+	engine->n_queue = 0;
+
+	return true;
 }
 
 void engine_print_state(Engine *engine)
@@ -185,6 +210,12 @@ Entity *engine_get_entity(Engine *engine, int x, int y)
 }
 
 void engine_free(Engine *engine)
+{
+	engine_end(engine);
+	free(engine);
+}
+
+void engine_end(Engine *engine)
 {
 	int i, j;
 	
