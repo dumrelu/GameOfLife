@@ -41,16 +41,16 @@ int graphics_check_event(Graphics *graphics);
 //Get the event and update last event coordinates
 char graphics_event(Graphics *graphics);
 
-//Draw point TODO
+//Draw point
 void graphics_draw_point(Graphics *graphics, int x, int y);
 
-//Draw line TODO
+//Draw line
 void graphics_draw_line(Graphics *graphics, int x1, int y1, int x2, int y2);
 
-//Draw rect TODO
+//Draw rect
 void graphics_draw_rect(Graphics *graphics, int x, int y, int height, int width);
 
-//Draw fill rect TODO
+//Draw fill rect
 void graphics_draw_fill_rect(Graphics *graphics, int x, int y, int height, int width);
 
 //TODO: images

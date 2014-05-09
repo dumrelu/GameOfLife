@@ -116,3 +116,23 @@ char graphics_event(Graphics *graphics)
 
 	return -1;
 }
+
+void graphics_draw_point(Graphics *graphics, int x, int y)
+{
+	XDrawPoint(graphics->display, graphics->window, graphics->gc,x,y);
+}
+
+void graphics_draw_line(Graphics *graphics, int x1, int y1, int x2, int y2)
+{
+	XDrawLine(graphics->display, graphics->window, graphics->gc, x1, y1, x2, y2);
+}
+
+void graphics_draw_rect(Graphics *graphics, int x, int y, int height, int width)
+{
+	XDrawRectangle(graphics->display, graphics->window, graphics->gc, x, y, width, height);
+}
+
+void graphics_draw_fill_rect(Graphics *graphics, int x, int y, int height, int width)
+{
+	XFillRectangle(graphics->display, graphics->window, graphics->gc, x, y, width, height);
+}
