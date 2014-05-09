@@ -1,5 +1,7 @@
 #include "graphics.h"
 
+#include <string.h>
+
 int graphics_init(Graphics *graphics, int height, int width, const char *window_name)
 {
 	//Save screen width and height
@@ -135,4 +137,9 @@ void graphics_draw_rect(Graphics *graphics, int x, int y, int height, int width)
 void graphics_draw_fill_rect(Graphics *graphics, int x, int y, int height, int width)
 {
 	XFillRectangle(graphics->display, graphics->window, graphics->gc, x, y, width, height);
+}
+
+void graphics_draw_string(Graphics *graphics, int x, int y, const char *string)
+{
+	XDrawString(graphics->display, graphics->window, graphics->gc, x, y, string, strlen(string));
 }

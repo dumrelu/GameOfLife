@@ -53,6 +53,9 @@ void graphics_draw_rect(Graphics *graphics, int x, int y, int height, int width)
 //Draw fill rect
 void graphics_draw_fill_rect(Graphics *graphics, int x, int y, int height, int width);
 
+//Draw string
+void graphics_draw_string(Graphics *graphics, int x, int y, const char *string);
+
 //TODO: images
 
 #endif /*GOF_GRAPHICS_H*/
