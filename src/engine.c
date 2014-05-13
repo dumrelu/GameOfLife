@@ -180,6 +180,11 @@ bool engine_add_entity(Engine *engine, Entity *entity)
 
 bool engine_remove_entity(Engine *engine, int x, int y)
 {
+	if(!engine_is_correct(engine, x, y))
+	{
+		return false;
+	}
+
 	//Check if there is an entity to remve
 	if(engine_is_free(engine, x, y))
 	{

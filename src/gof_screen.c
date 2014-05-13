@@ -51,6 +51,14 @@ void screen_draw(GoF_Screen *screen, Graphics *g, Engine *engine)
 			if(!engine_is_free(engine, j, i))
 				graphics_draw_fill_rect(g, j*screen->entity_length+1, i*screen->entity_length+1, actual_en_length, actual_en_length);
 
+	//Text color
+	graphics_color(g, 0, 0, 255);
+
+	//Write info
+	char info[50];
+	sprintf(info, "Number of entities: %d", engine->n_entities);
+	graphics_draw_string(g, screen->width * screen->entity_length + 10, 10, info);
+
 	//Flush graphics
 	graphics_flush(g);
 }
