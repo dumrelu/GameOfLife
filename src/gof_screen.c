@@ -56,8 +56,11 @@ void screen_draw(GoF_Screen *screen, Graphics *g, Engine *engine)
 
 	//Write info
 	char info[50];
-	sprintf(info, "Number of entities: %d", engine->n_entities);
+	sprintf(info, "Number of entities: %d / %d", engine->n_entities, MAX_ENTITIES);
 	graphics_draw_string(g, screen->width * screen->entity_length + 10, 10, info);
+
+	sprintf(info, "Number of entities in queue: %d / %d", engine->n_queue, MAX_ENTITIES);
+	graphics_draw_string(g, screen->width * screen->entity_length + 10, 30, info);
 
 	//Flush graphics
 	graphics_flush(g);

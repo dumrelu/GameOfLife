@@ -83,7 +83,7 @@ void engine_update(Engine *engine)
 	{
 		if(engine->e_list[i]->alive == false)	//If the entity is dead, remove it from the engine
 		{
-			int a = engine_remove_entity(engine, engine->e_list[i]->x, engine->e_list[i]->y);
+			engine_remove_entity(engine, engine->e_list[i]->x, engine->e_list[i]->y);
 			i--;
 		}
 	}
@@ -180,11 +180,6 @@ bool engine_add_entity(Engine *engine, Entity *entity)
 
 bool engine_remove_entity(Engine *engine, int x, int y)
 {
-	if(!engine_is_correct(engine, x, y))
-	{
-		return false;
-	}
-
 	//Check if there is an entity to remve
 	if(engine_is_free(engine, x, y))
 	{

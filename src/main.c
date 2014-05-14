@@ -6,12 +6,13 @@
 int main(int argc, char *argv[])
 {	
 	//Prepare engine
+	Engine *engine = engine_create(30, 30, 30);
 	//engine_save(engine, "glider.sav");
-	Engine *engine = engine_load("glider.sav");
+	//Engine *engine = engine_load("glider.sav");
 
 	GoF_Screen *screen = screen_create(0, 0, 30, 30, 20);
 	Graphics g;
-	graphics_init(&g, 800, 800, "The Game of Life!");
+	graphics_init(&g, 800, 900, "The Game of Life!");
 
 	char input = 0;
 	while(input != 'k')

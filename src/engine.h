@@ -7,7 +7,7 @@
 
 #define MAX_HEIGHT 100
 #define MAX_WIDTH 100
-#define MAX_ENTITIES 50
+#define MAX_ENTITIES MAX_HEIGHT * MAX_WIDTH
 
 typedef struct {
 	//Dimensions
