@@ -15,7 +15,7 @@ GoF_Screen *screen_create(int x, int y,int height, int width,int entity_length)
 
 void screen_draw(GoF_Screen *screen, Graphics *g, Engine *engine)
 {	//TODO: refactor
-	int actual_en_length = screen->entity_length - 2, i, j;
+	int a_l = screen->entity_length - 2, i, j;
 
 	//Set background color
 	graphics_background(g, 41, 64, 60);
@@ -42,14 +42,36 @@ void screen_draw(GoF_Screen *screen, Graphics *g, Engine *engine)
 		graphics_draw_line(g, 0, start_y, screen->width * screen->entity_length, end_y);
 	}
 
-	//Set entity draw color
-	graphics_color(g, 0, 255, 0);
-
 	//Draw entities
-	for(i = screen->y; i < screen->height; i++)
-		for(j = screen->x; j < screen->width; j++)
-			if(!engine_is_free(engine, j, i))
-				graphics_draw_fill_rect(g, j*screen->entity_length+1, i*screen->entity_length+1, actual_en_length, actual_en_length);
+	int x, y;
+	int last_type = -1;
+	for(i = 0; i < screen->height; i++)
+		for(j = 0; j < screen->width; j++)
+		{
+			x = j+screen->x;
+			y = i+screen->y;
+
+			if(engine_is_correct(engine, x, y))
+			{
+				if(!engine_is_free(engine, x, y))
+				{
+					if(last_type != 1) {
+						graphics_color(g, 0, 255, 0);
+						last_type = 1;
+					}
+					graphics_draw_fill_rect(g, j*screen->entity_length+1, i*screen->entity_length+1, a_l, a_l);
+				}
+			}
+			else
+			{
+				if(last_type != 2) {
+					graphics_color(g, 255, 0, 0);
+					last_type = 2;
+				}
+				graphics_draw_fill_rect(g, j*screen->entity_length+1, i*screen->entity_length+1, a_l, a_l);
+			}
+		}
+			
 
 	//Text color
 	graphics_color(g, 0, 0, 255);
@@ -62,8 +84,9 @@ void screen_draw(GoF_Screen *screen, Graphics *g, Engine *engine)
 	sprintf(info, "Number of entities in queue: %d / %d", engine->n_queue, MAX_ENTITIES);
 	graphics_draw_string(g, screen->width * screen->entity_length + 10, 30, info);
 
-	//Flush graphics
-	graphics_flush(g);
+	sprintf(info, "Current FPS: %d", engine->ups);
+	graphics_color(g, 255, 236, 139);
+	graphics_draw_string(g, screen->width * screen->entity_length + 10, 50, info);
 }
 
 void screen_free(GoF_Screen *screen)
